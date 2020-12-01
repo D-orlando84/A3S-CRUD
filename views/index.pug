@@ -2,6 +2,15 @@ doctype html
 html(lang="fr")
     head
         title
-            | My page
+            | A3s-crud
+        h1 A3S CRUD
+        br
     body
-        h1 Bienvenue sur le site 
+        each page in data
+            table
+                tr
+                    td Id de la page : #{page.id} 
+                    td Titre de la page: #{page.title}
+                    td id: #{page._id}
+                    td    
+                        a(href='/modif?_id='+page._id) Modifier
