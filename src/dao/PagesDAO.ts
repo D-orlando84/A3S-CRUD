@@ -1,4 +1,5 @@
 import { DAO } from './DAO';
+const ObjectId = require('mongodb').ObjectId;
 
 class PagesDAO extends DAO {
     private _pages: any = null;
@@ -22,7 +23,7 @@ class PagesDAO extends DAO {
         try {
             const db = await super.getDb();
             const collection = db.collection('pages');
-            const pagesId = await collection.find({"_id":_id}).toArray();
+            const pagesId = await collection.find({"_id":ObjectId(_id)}).toArray();
             return pagesId;
 
         } catch (err) {
@@ -30,16 +31,17 @@ class PagesDAO extends DAO {
         }
     }
 
-    public async postPage(){
+    public async postPage(objet){
         try{
             const db = await super.getDb();
-            const collection = db.collection('pages'); 
-            const doc = {id: "toto", title: "", content: "", order: 1, type: "page", meta_title: "Mention Légles", meta_description: ""}
-            const result = await collection.insertOne(doc);
+            const collection = db.collection('pages');
+            const result = await collection.updateOne({"_id":ObjectId(objet._id)},{$set:{"id":objet.id, "title": objet.title, "content": objet.content, "order":objet.order, "type": objet.type, "metaa_title": objet.meta_title, "meta_description": objet.meta_description}});
             return result;
         } catch(err){
-            throw new Error("Impossible d'insérer du contenue");
+            throw new Error("Impossible d'insérer du contenue" +err);
         }
     }
 }
 export { PagesDAO };
+
+//UPDATE table SET colonne = 'valeur'

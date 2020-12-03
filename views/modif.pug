@@ -6,7 +6,8 @@ html(lang="fr")
         h1 Page de modification
         br
     body
-        form(action="./modif" method="POST")
+        - let url = "./modif?_id=" + page._id
+        form(action=url method="POST")
             label(for="id") Id:
             input(
                 type="text"

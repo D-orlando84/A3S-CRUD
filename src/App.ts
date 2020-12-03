@@ -58,16 +58,23 @@ class App {
             const data = await new PagesDAO().getPageId(id);
             return res.render('modif',{'page': data[0]});
         });
+        //voici ce que je fais si je reçois un appel post sur /modif
         router.post('/modif', async function (req,res){
-            const data = await new PagesDAO().postPage();
-            const item = {
-                id: req.body.id,
-                title: req.body.title,
-                content: req.body.content,
-                order: req.body.order,
-                type: req.body.type,
-                meta_title: req.body.meta_title,
-                meta_description: req.body.meta_description
+            try{
+                const item = {
+                    _id: req.query._id,
+                    id: req.body.id,
+                    title: req.body.title,
+                    content: req.body.content,
+                    order: req.body.order,
+                    type: req.body.type,
+                    meta_title: req.body.meta_title,
+                    meta_description: req.body.meta_description
+                };
+                const data = await new PagesDAO().postPage(item);
+                return res.redirect('/');
+            } catch(err){
+                return res.status(500);
             }
         })
     }
