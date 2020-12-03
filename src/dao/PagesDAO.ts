@@ -35,7 +35,7 @@ class PagesDAO extends DAO {
         try{
             const db = await super.getDb();
             const collection = db.collection('pages');
-            const result = await collection.updateOne({"_id":ObjectId(objet._id)},{$set:{"id":objet.id, "title": objet.title, "content": objet.content, "order":objet.order, "type": objet.type, "metaa_title": objet.meta_title, "meta_description": objet.meta_description}});
+            const result = await collection.updateOne({"_id":ObjectId(objet._id)},{$set:{"id":objet.id, "title": objet.title, "content": objet.content, "order":objet.order, "type": objet.type, "meta_title": objet.meta_title, "meta_description": objet.meta_description}});
             return result;
         } catch(err){
             throw new Error("Impossible d'insérer du contenue" +err);
