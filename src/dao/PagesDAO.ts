@@ -41,6 +41,18 @@ class PagesDAO extends DAO {
             throw new Error("Impossible d'insérer du contenue" +err);
         }
     }
+
+    public async postNewPage(item){
+        try{
+            const db = await super.getDb();
+            const collection = db.collection('pages');
+            const newItem = ({$set:{"id":item.id, "title":item.title, "content": item.content, "order": item.order, "type":item.type, "meta_title":item.meta_title, "meta_description":item.meta_description}});
+            const newPage = await collection.insertOne(newItem);
+            return newPage;
+        } catch{
+
+        }
+    }
 }
 export { PagesDAO };
 

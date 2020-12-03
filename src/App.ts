@@ -77,6 +77,29 @@ class App {
                 return res.status(500);
             }
         })
+        router.get('/newPage', async function (req,res){
+            const id= req.query._id;
+            const data = await new PagesDAO().getPageId(id);
+            return res.render('newPage',{'page': data[0]});
+        });
+
+        router.post('/newPage', async function (req,res){
+            try{
+                const objet = {
+                    id: req.body.id,
+                    title: req.body.title,
+                    content: req.body.content,
+                    order: req.body.order,
+                    type: req.body.type,
+                    meta_title: req.body.meta_title,
+                    meta_description: req.body.meta_description
+                }
+                const data = await new PagesDAO().postNewPage(objet);
+                return res.redirect('/');
+            } catch(err){
+                return res.status(500);
+            }
+        })
     }
 };
 
