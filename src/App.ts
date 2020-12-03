@@ -78,7 +78,6 @@ class App {
             }
         })
         router.get('/newPage', async function (req,res){
-            const id= req.query._id;
             const data = await new PagesDAO().getPageId(id);
             return res.render('newPage',{'page': data[0]});
         });
