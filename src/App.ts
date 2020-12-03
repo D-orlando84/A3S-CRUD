@@ -78,6 +78,7 @@ class App {
             }
         })
         router.get('/newPage', async function (req,res){
+            const id= req.query._id;
             const data = await new PagesDAO().getPageId(id);
             return res.render('newPage',{'page': data[0]});
         });
@@ -97,6 +98,16 @@ class App {
                 return res.redirect('/');
             } catch(err){
                 return res.status(500);
+            }
+        })
+
+        router.delete('/', async function (req,res){
+            const _id =req.query._id
+            try{
+                const data = await new PagesDAO().deletePage(_id);
+                return res.render('index',{'page': data[0]});
+            } catch{
+
             }
         })
     }
