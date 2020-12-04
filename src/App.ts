@@ -100,10 +100,11 @@ class App {
                 return res.status(500);
             }
         })
-        
+
         router.post('/delete', async function (req, res) {
+            const _id = req.query.id;
             try {
-                const objet = {
+                /*const objet = {
                     _id: req.body._id,
                     id: req.body.id,
                     title: req.body.title,
@@ -112,8 +113,9 @@ class App {
                     type: req.body.type,
                     meta_title: req.body.meta_title,
                     meta_description: req.body.meta_description
-                }
-                const data = await new PagesDAO().deletePage(objet);
+                }*/
+                const data = await new PagesDAO().deletePage(_id);
+                console.log(data);
                 return res.redirect('/');
             } catch (err) {
                 return res.status(500);
