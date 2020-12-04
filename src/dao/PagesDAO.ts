@@ -53,11 +53,11 @@ class PagesDAO extends DAO {
         }
     }
 
-    public async deletePage(_id){
+    public async deletePage(item){
         try{
             const db = await super.getDb();
             const collection = db.collection('pages');
-            const delPage = await collection.deleteOne(_id);
+            const delPage = await collection.deleteOne({"_id": item._id, "id":item.id, "title": item.title, "content": item.content, "order":item.order, "type": item.type, "meta_title": item.meta_title, "meta_description": item.meta_description});
             return delPage;
         } catch(err){
             throw new Error("Impossible de suprimer le contenue"+err);

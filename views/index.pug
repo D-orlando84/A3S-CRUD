@@ -10,10 +10,10 @@ html(lang="fr")
         each page in data
             table
                 tr
-                    td Id de la page : #{page.id} 
-                    td Titre de la page: #{page.title}
-                    td id: #{page._id}
-                    td    
-                        a(href='/modif?_id='+page._id) Modifier
-                    td
-                        a.button(href='/?_id='+page._id) Delete  
+                    form(action='/delete?_id='+page._id method="POST")
+                        td Id de la page : #{page.id} 
+                        td Titre de la page: #{page.title}
+                        td id: #{page._id}
+                        td    
+                            a(href='/modif?_id='+page._id) Modifier
+                            a(href='/delete?_id='+page._id) Supprimer  
