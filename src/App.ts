@@ -102,10 +102,23 @@ class App {
         })
 
         router.post('/delete', async function (req, res) {
-            const _id = req.query.id;
+            const _id = req.query._id;
             try {
-                /*const objet = {
-                    _id: req.body._id,
+                const data = await new PagesDAO().deletePage(_id);
+                return res.redirect('/');
+            } catch (err) {
+                return res.status(500);
+            }
+        })
+
+        router.get('/test', async function (req, res) {
+            const data = await new PagesDAO().getAnyPages();
+            return res.json(data);
+        });
+
+        router.post('/test', async function (req, res) {
+            try {
+                const objet = {
                     id: req.body.id,
                     title: req.body.title,
                     content: req.body.content,
@@ -113,14 +126,15 @@ class App {
                     type: req.body.type,
                     meta_title: req.body.meta_title,
                     meta_description: req.body.meta_description
-                }*/
-                const data = await new PagesDAO().deletePage(_id);
-                console.log(data);
-                return res.redirect('/');
+                }
+                const data = await new PagesDAO().postNewPage(objet);
+                return res.json(data);
             } catch (err) {
                 return res.status(500);
             }
         })
+
+
     }
 };
 
