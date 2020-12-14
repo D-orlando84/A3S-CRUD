@@ -74,6 +74,28 @@ class PagesDAO extends DAO {
             throw new Error("Impossible de récupérer les pages." + err);
         }
     }
+
+    public async getUser(_id){
+        try{
+            const db = await super.getDb();
+            const collection = db.collection('user');
+            const userId = await collection.find({"_id":ObjectId(_id)}).toArray();
+            return userId;
+        } catch(err){
+
+        }
+    }
+    public async postUser(item){
+        try{
+            const db = await super.getDb();
+            const collection = db.collection('user');
+            const users = await collection.insertOne(item);
+            return users;
+        } catch(err){
+            throw new Error("Impossible de recupere l'utilisateur");
+        }
+    }
+
 }
 export { PagesDAO };
 

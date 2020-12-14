@@ -3,6 +3,7 @@ import * as sitemap from 'sitemap';
 import { json, raw, text, urlencoded } from 'body-parser';
 import * as path from 'path';
 import { PagesDAO } from "./dao/PagesDAO";
+const bcrypt = require('bcrypt');
 const config = require('../config.json');
 
 class App {
@@ -134,7 +135,40 @@ class App {
             }
         })
 
+        router.get('/register', async function (req, res) {
+            const id = req.query._id;
+            const data = await new PagesDAO().getUser(id);
+            return res.render('register', { 'user': data[0] });
+        });
 
+        router.post('/api/users', function (req, res) {
+            bcrypt.genSalt(10, function (err, salt) {
+                bcrypt.hash(req.body.password, salt, async function (err, hash) {
+                    try {
+                        const objet = {
+                            name: req.body.name,
+                            password: hash
+                        }
+                        const data = await new PagesDAO().postUser(objet);
+                        return res.redirect('/');
+                    } catch (err) {
+
+                    }
+                })
+            })
+        })
+        router.post('/register', async function (req, res) {
+            try {
+                const objet = {
+                    utilisateur: req.body.utilisateur,
+                    password: req.body.password
+                }
+                const data = await new PagesDAO().postUser(objet);
+                return res.redirect('/');
+            } catch (err) {
+                return res.status(500);
+            }
+        })
     }
 };
 
